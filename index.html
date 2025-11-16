@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoPulse – Monitorea el ruido de tu entorno</title>
+  <meta
+    name="description"
+    content="EcoPulse es una plataforma ciudadana que permite medir, visualizar y reportar la contaminación sonora en tiempo real para construir ciudades más saludables."
+  />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="icon" href="assets/img/icon-ecopulse.jpeg" type="image/jpeg" />
+</head>
+<body>
+  <a class="skip-link" href="#inicio">Saltar al contenido principal</a>
+
+  <!-- ========== HEADER / NAVBAR ========== -->
+  <header class="topbar">
+    <div class="topbar__inner">
+      <!-- Logo -->
+      <a href="#inicio" class="brand">
+        <img
+          src="assets/img/logo-ecopulse.jpeg"
+          alt="logo-ecopulse"
+          class="brand__logo"
+        />
+        <span class="brand__text">EcoPulse</span>
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="nav" aria-label="Navegación principal">
+        <ul class="nav__list">
+          <li><a href="#inicio" class="nav__link nav__link--active">Inicio</a></li>
+          <li><a href="#beneficios" class="nav__link">Beneficios</a></li>
+          <li><a href="#testimonios" class="nav__link">Testimonios</a></li>
+          <li><a href="#faq" class="nav__link">Preguntas frecuentes</a></li>
+          <li><a href="#planes" class="nav__link">Planes</a></li>
+          <li><a href="#contacto" class="nav__link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <!-- Selector de idioma -->
+      <div class="lang">
+        <button
+          class="lang__button"
+          type="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+          data-toggle-lang
+        >
+          <span class="lang__icon" aria-hidden="true">🌐</span>
+          <span class="lang__label" data-lang-label>ES</span>
+          <span class="lang__chevron" aria-hidden="true">▼</span>
+        </button>
+
+        <div
+          class="lang__dropdown"
+          id="lang-dropdown"
+          role="menu"
+          aria-label="Seleccionar idioma"
+          hidden
+        >
+          <label class="lang__option">
+            <input
+              type="radio"
+              name="lang-choice"
+              value="ES"
+              checked
+            />
+            <span>Español (ES)</span>
+          </label>
+          <label class="lang__option">
+            <input
+              type="radio"
+              name="lang-choice"
+              value="EN"
+            />
+            <span>Inglés (EN)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Botón menú móvil -->
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile nav -->
+    <nav
+      id="mobile-nav"
+      class="nav nav--mobile"
+      aria-label="Navegación principal móvil"
+      hidden
+    >
+      <ul class="nav__list nav__list--mobile">
+        <li><a href="#inicio" class="nav__link">Inicio</a></li>
+        <li><a href="#beneficios" class="nav__link">Beneficios</a></li>
+        <li><a href="#testimonios" class="nav__link">Testimonios</a></li>
+        <li><a href="#faq" class="nav__link">Preguntas frecuentes</a></li>
+        <li><a href="#planes" class="nav__link">Planes</a></li>
+        <li><a href="#contacto" class="nav__link">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ========== MAIN ========== -->
+  <main>
+    <!-- ===== HERO (Mockup 1 / 16) ===== -->
+    <section id="inicio" class="hero">
+      <div class="hero__inner">
+        <div class="hero__content">
+          <h1 class="hero__title">
+            “Monitorea el ruido de tu entorno<br />
+            y protege tu bienestar”
+          </h1>
+          <p class="hero__text">
+            EcoPulse te permite medir, visualizar y reportar niveles de ruido
+            en tiempo real.
+          </p>
+
+          <button
+            class="btn btn--primary hero__button"
+            type="button"
+            data-open-download-modal
+          >
+            Descargar App
+          </button>
+        </div>
+
+        <div class="hero__visual" aria-hidden="true">
+          <img
+            src="assets/img/hero-smartphone-network.png"
+            alt="imagen-hero-red-de-casas-y-smartphone"
+            class="hero__image"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ¿Qué es EcoPulse? (Mockup 2 / 16) ===== -->
+    <section id="que-es" class="about">
+      <div class="about__background">
+        <div class="about__inner">
+          <header class="about__header">
+            <h2 class="about__title">¿Qué es EcoPulse?</h2>
+            <p class="about__subtitle">
+              La app que convierte el ruido urbano en información útil para tu bienestar.
+            </p>
+          </header>
+
+          <div class="about__cards">
+            <article class="about-card">
+              <p>
+                EcoPulse es una plataforma ciudadana que permite medir,
+                visualizar y reportar la contaminación sonora en tiempo real.
+                Utiliza el micrófono de tu smartphone para registrar los niveles
+                de ruido en tu entorno y transforma esos datos en mapas de calor
+                colaborativos.
+              </p>
+            </article>
+
+            <article class="about-card">
+              <p>
+                Nuestro objetivo es empoderar a las personas para mejorar la
+                calidad acústica de las ciudades, promoviendo decisiones
+                informadas y entornos más saludables.
+              </p>
+            </article>
+          </div>
+
+          <div class="about__action">
+            <a href="#beneficios" class="btn btn--light">
+              Conoce más sobre cómo funciona EcoPulse
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Beneficios (Mockup 3 / 16) ===== -->
+    <section id="beneficios" class="section section--benefits">
+      <div class="section__inner">
+        <header class="section__header section__header--center">
+          <h2 class="section__title">Beneficios de usar EcoPulse</h2>
+        </header>
+
+        <div class="benefits-grid">
+          <article class="benefit">
+            <img
+              src="assets/img/benefit-icon-microphone.png"
+              alt="icono-beneficio-microfono"
+              class="benefit__icon"
+            />
+            <h3 class="benefit__title">Mide el ruido en tiempo real</h3>
+            <p class="benefit__text">
+              Usa el micrófono de tu smartphone para conocer al instante los
+              niveles de ruido en tu entorno y tomar decisiones informadas sobre
+              tu exposición sonora.
+            </p>
+          </article>
+
+          <article class="benefit">
+            <img
+              src="assets/img/benefit-icon-map.png"
+              alt="icono-beneficio-mapa-sonoro"
+              class="benefit__icon"
+            />
+            <h3 class="benefit__title">Visualiza mapas sonoros colaborativos</h3>
+            <p class="benefit__text">
+              Explora un mapa interactivo que muestra las zonas más tranquilas o
+              ruidosas de tu ciudad, construido con los reportes de la comunidad.
+            </p>
+          </article>
+
+          <article class="benefit">
+            <img
+              src="assets/img/benefit-icon-alert.png"
+              alt="icono-beneficio-alerta-contaminacion"
+              class="benefit__icon"
+            />
+            <h3 class="benefit__title">
+              Reporta focos de contaminación acústica
+            </h3>
+            <p class="benefit__text">
+              Envía alertas sobre fuentes de ruido molestas, como tráfico o
+              obras, y contribuye con las autoridades y vecinos a mejorar el
+              entorno urbano.
+            </p>
+          </article>
+
+          <article class="benefit">
+            <img
+              src="assets/img/benefit-icon-heart.png"
+              alt="icono-beneficio-salud-auditiva"
+              class="benefit__icon"
+            />
+            <h3 class="benefit__title">
+              Protege tu bienestar y salud auditiva
+            </h3>
+            <p class="benefit__text">
+              Reduce tu exposición a ruidos dañinos, mejora tu descanso y ayuda
+              a construir ciudades más saludables y sostenibles.
+            </p>
+          </article>
+        </div>
+
+        <div class="section__cta">
+          <button
+            type="button"
+            class="btn btn--primary"
+            data-open-download-modal
+          >
+            Descargar App
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Testimonios (Mockup 4 / 16) ===== -->
+    <section id="testimonios" class="section section--testimonials">
+      <div class="section__inner">
+        <header class="section__header section__header--center">
+          <h2 class="section__title">Lo que opinan nuestros usuarios</h2>
+        </header>
+
+        <div class="testimonials-strip">
+          <article class="testimonial">
+            <div class="testimonial__avatar">
+              <img
+                src="assets/img/testimonial-avatar-1.png"
+                alt="foto-testimonio-liliana"
+              />
+            </div>
+            <div class="testimonial__stars" aria-label="5 de 5 estrellas">
+              ★★★★★
+            </div>
+            <p class="testimonial__text">
+              “Con EcoPulse entendí cuánto afecta el ruido a mi descanso. Ahora
+              elijo rutas y horarios más tranquilos.”
+            </p>
+            <p class="testimonial__author">Liliana V. – Surco</p>
+          </article>
+
+          <article class="testimonial">
+            <div class="testimonial__avatar">
+              <img
+                src="assets/img/testimonial-avatar-2.png"
+                alt="foto-testimonio-alex"
+              />
+            </div>
+            <div class="testimonial__stars" aria-label="5 de 5 estrellas">
+              ★★★★★
+            </div>
+            <p class="testimonial__text">
+              “Por fin tengo una forma de demostrar el exceso de ruido en mi
+              barrio. Me hace sentir parte del cambio.”
+            </p>
+            <p class="testimonial__author">Alex S. – La Victoria</p>
+          </article>
+
+          <article class="testimonial">
+            <div class="testimonial__avatar">
+              <img
+                src="assets/img/testimonial-avatar-3.png"
+                alt="foto-testimonio-carlos"
+              />
+            </div>
+            <div class="testimonial__stars" aria-label="5 de 5 estrellas">
+              ★★★★★
+            </div>
+            <p class="testimonial__text">
+              “Uso los mapas de EcoPulse para recomendar hospedajes más
+              silenciosos a mis clientes.”
+            </p>
+            <p class="testimonial__author">Giancarlo R. – La Molina</p>
+          </article>
+        </div>
+
+        <div class="testimonials-dots" aria-hidden="true">
+          <span class="dot dot--active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+
+        <div class="section__cta">
+          <button
+            class="btn btn--primary"
+            type="button"
+            data-open-download-modal
+          >
+            Descarga EcoPulse y mejora tu entorno
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Preguntas frecuentes (Mockups 5–9 / 16) ===== -->
+    <section id="faq" class="section section--faq">
+      <div class="section__inner">
+        <header class="section__header">
+          <h2 class="section__title">Preguntas frecuentes</h2>
+        </header>
+
+        <div class="faq-list">
+          <article class="faq-item">
+            <button
+              class="faq-item__header"
+              type="button"
+              aria-expanded="false"
+            >
+              <span>¿Qué es EcoPulse?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" hidden>
+              <p>
+                Es una aplicación ciudadana que mide y reporta la contaminación
+                sonora en tiempo real para promover entornos más saludables.
+              </p>
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button
+              class="faq-item__header"
+              type="button"
+              aria-expanded="false"
+            >
+              <span>¿Cómo mide el ruido mi teléfono?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" hidden>
+              <p>
+                La app utiliza el micrófono del dispositivo para registrar los
+                niveles de sonido y los transforma en datos de decibelios (dB).
+              </p>
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button
+              class="faq-item__header"
+              type="button"
+              aria-expanded="false"
+            >
+              <span>¿Qué hago con los reportes que genero?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" hidden>
+              <p>
+                Puedes compartirlos con tu comunidad o con las autoridades
+                locales para mejorar la gestión del ruido urbano.
+              </p>
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button
+              class="faq-item__header"
+              type="button"
+              aria-expanded="false"
+            >
+              <span>¿La aplicación es gratuita?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" hidden>
+              <p>
+                Sí, EcoPulse ofrece una versión gratuita para ciudadanos y una
+                versión profesional con reportes avanzados para instituciones.
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <div class="section__cta section__cta--faq">
+          <a href="#contacto" class="btn btn--primary">
+            ¿Aún tienes dudas? Contáctanos aquí
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Planes (Mockup 10 / 16) ===== -->
+    <section id="planes" class="section section--plans">
+      <div class="section__inner">
+        <header class="section__header section__header--center">
+          <h2 class="section__title">Planes que se adaptan a tu necesidad</h2>
+          <p class="section__subtitle">
+            Empieza gratis o elige una versión profesional para tu organización.
+          </p>
+        </header>
+
+        <div class="plans-grid">
+          <article class="plan plan--citizen">
+            <img
+              src="assets/img/plan-icon-citizen.png"
+              alt="icono-plan-ciudadano"
+              class="plan__icon"
+            />
+            <h3 class="plan__title">Plan ciudadano (Gratis)</h3>
+            <ul class="plan__list">
+              <li>Acceso gratuito a la app móvil</li>
+              <li>Medición de ruido en tiempo real</li>
+              <li>Mapa de calor comunitario</li>
+              <li>Alertas personalizadas</li>
+              <li>Disponible para todos los usuarios</li>
+            </ul>
+            <button
+              type="button"
+              class="btn btn--primary plan__button"
+              data-open-download-modal
+            >
+              Descargar App
+            </button>
+          </article>
+
+          <div class="plans-divider" aria-hidden="true"></div>
+
+          <article class="plan plan--corporate">
+            <img
+              src="assets/img/plan-icon-corporate.png"
+              alt="icono-plan-corporativo"
+              class="plan__icon"
+            />
+            <h3 class="plan__title">Plan corporativo (Premium)</h3>
+            <ul class="plan__list">
+              <li>Panel de control institucional</li>
+              <li>Reportes avanzados y dashboards</li>
+              <li>Exportación de datos y análisis</li>
+              <li>Soporte y asesoría técnica</li>
+              <li>Disponible para entidades organizacionales</li>
+            </ul>
+            <a href="#contacto" class="btn btn--primary plan__button">
+              Solicitar demo
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Contacto – Formulario (Mockups 11–13 / 16) ===== -->
+    <section id="contacto" class="section section--contact-form">
+      <div class="section__inner">
+        <header class="section__header">
+          <h2 class="section__title">Contáctanos</h2>
+        </header>
+
+        <form id="contact-form" class="contact-form" novalidate>
+          <div class="field">
+            <label for="name">Nombre</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              placeholder="Tu nombre completo"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="email">Correo electrónico</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="tucorreo@ejemplo.com"
+              required
+            />
+          </div>
+
+          <div class="field field--select">
+            <label for="reason">Motivo</label>
+            <select id="reason" name="reason" required>
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option value="consulta">Consulta</option>
+              <option value="sugerencia">Sugerencia</option>
+              <option value="alianza">Alianza</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="message">Mensaje</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              placeholder="Cuéntanos brevemente cómo podemos ayudarte"
+              required
+            ></textarea>
+          </div>
+
+          <div class="contact-form__actions">
+            <button type="submit" class="btn btn--primary">Enviar</button>
+          </div>
+
+          <p class="contact-form__success" id="contact-success" hidden>
+            Mensaje enviado ✓
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===== Contacto – Datos + Imagen (Mockup 14 / 16) ===== -->
+    <section class="section section--contact-info">
+      <div class="section__inner section__inner--two-cols">
+        <div class="contact-info">
+          <h3 class="contact-info__title">Datos de contacto</h3>
+
+          <div class="contact-info__item">
+            <div class="contact-info__icon">
+              <!-- Usa emoji o reemplaza por imagen -->
+              <img
+                src="assets/img/contact-icon-phone.png"
+                alt="icono-telefono"
+              />
+            </div>
+            <span class="contact-info__text">999 9999 999</span>
+          </div>
+
+          <div class="contact-info__item">
+            <div class="contact-info__icon">
+              <img
+                src="assets/img/contact-icon-email.png"
+                alt="icono-correo"
+              />
+            </div>
+            <span class="contact-info__text">contacto@ecopulse.com</span>
+          </div>
+
+          <div class="contact-info__item">
+            <div class="contact-info__icon">
+              <img
+                src="assets/img/contact-icon-location.png"
+                alt="icono-ubicacion"
+              />
+            </div>
+            <span class="contact-info__text">Av. Ambiental 123</span>
+          </div>
+        </div>
+
+        <div class="contact-info__image-wrapper" aria-hidden="true">
+          <img
+            src="assets/img/contact-hero.png"
+            alt="contact-hero-smartphone"
+            class="contact-info__image"
+          />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer (Mockup 14 / 16) ===== -->
+  <footer class="footer">
+    <div class="footer__upper">
+      <div class="footer__brand">@EcoPulse2025</div>
+
+      <nav class="footer__nav" aria-label="Navegación inferior">
+        <a href="#inicio">Inicio</a>
+        <a href="#beneficios">Beneficios</a>
+        <a href="#testimonios">Testimonios</a>
+        <a href="#faq">Preguntas frecuentes</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+      <div class="footer__social">
+        <a href="#" aria-label="LinkedIn EcoPulse">
+          <img
+            src="assets/img/icon-linkedin.png"
+            alt="logo-linkedin"
+          />
+        </a>
+        <a href="#" aria-label="Instagram EcoPulse">
+          <img
+            src="assets/img/icon-instagram.png"
+            alt="logo-instagram"
+          />
+        </a>
+        <a href="#" aria-label="Facebook EcoPulse">
+          <img
+            src="assets/img/icon-facebook.png"
+            alt="logo-facebook"
+          />
+        </a>
+      </div>
+    </div>
+
+    <div class="footer__lower">
+      <a href="#">Términos y Condiciones</a>
+      <a href="#">Políticas de privacidad</a>
+    </div>
+  </footer>
+
+  <!-- ========== MODAL DESCARGA (Mockup 15 / 16) ========== -->
+  <div
+    class="modal"
+    id="download-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="download-modal-title"
+    hidden
+  >
+    <div class="modal__backdrop" data-close-modal></div>
+
+    <div class="modal__dialog">
+      <header class="modal__header">
+        <h2 id="download-modal-title" class="modal__title">
+          Descargar EcoPulse ⬇
+        </h2>
+        <button
+          type="button"
+          class="modal__close"
+          aria-label="Cerrar ventana de descarga"
+          data-close-modal
+        >
+          ×
+        </button>
+      </header>
+
+      <div class="modal__body">
+        <div class="modal__stores">
+          <div class="modal-store">
+            <img
+              src="assets/img/icon-store-apple.png"
+              alt="icono-app-store"
+              class="modal-store__icon"
+            />
+            <p class="modal-store__text">Descargar en App Store</p>
+          </div>
+
+          <div class="modal-store">
+            <img
+              src="assets/img/icon-store-google.png"
+              alt="icono-google-play"
+              class="modal-store__icon"
+            />
+            <p class="modal-store__text">Descargar en Play Store</p>
+          </div>
+        </div>
+
+        <div class="modal__qr">
+          <p class="modal__qr-text">O escanea el código QR</p>
+          <img
+            src="assets/img/download-qr.png"
+            alt="codigo-qr-descarga-ecopulse"
+            class="modal__qr-image"
+          />
+          <p class="modal__qr-caption">
+            Escanea desde tu celular para descargar la app
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>
