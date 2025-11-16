@@ -107,7 +107,7 @@ The landing page is designed to be deployed using **GitHub Pages**.
 The site will be available at:
 
 ```text
-https://<org-or-user>.github.io/noistop-landing-page/
+https://ecopulse-ihc-tec-mob-1asi0385-2520-4195.github.io/noistop-landing-page/
 ```
 
 This public URL can be referenced in the course report and in the **About-the-Product** video.
