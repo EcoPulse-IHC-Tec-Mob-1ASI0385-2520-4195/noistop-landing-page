@@ -8,11 +8,8 @@ It is developed as part of the **SI385 – HCI and Mobile Technologies** course 
 ## 📋 Table of Contents
 
 - [Overview](#-overview)
-- [Key Features](#-key-features)
 - [Tech Stack](#-tech-stack)
 - [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-- [Usage & Content](#-usage--content)
 - [Branching Model](#-branching-model)
 - [License](#-license)
 - [Authors](#-authors--ecopulse-startup-team)
