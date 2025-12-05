@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eco Pulse - Iniciar Sesión</title>
+  <link rel="stylesheet" href="public/assets/styles/login.css" />
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo-section">
+        <a href="index.html">
+            <img src="public/assets/images/logo-ecopulse.png" alt="Eco Pulse Logo" class="logo" />
+        </a>
+        <h1>Eco Pulse</h1>
+    </div>
+
+    <div class="form-section">
+      <h2>Iniciar Sesión</h2>
+      <form id="loginForm">
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" required />
+
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" required />
+
+        <a href="#" class="recover-link">Recuperar Contraseña</a>
+
+        <button type="submit" class="login-btn">Iniciar Sesión</button>
+        <button type="button" class="register-btn">Registrarse</button>
+      </form>
+    </div>
+  </div>
+  <script src="public/assets/scripts/login.js"></script>
+</body>
+</html>
