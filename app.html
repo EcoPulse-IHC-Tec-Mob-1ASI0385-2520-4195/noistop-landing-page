@@ -2,866 +2,636 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>EcoPulse – App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EcoPulse - App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="public/assets/styles/app.css" />
-
-  <!-- Fuente e iconos -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;700"
-  />
-
-  <script src="public/assets/scripts/app.js" defer></script>
+  <link rel="icon" href="favicon.ico" />
 </head>
 <body>
-  <div class="app-shell">
-    <!-- ============ SIDEBAR ============ -->
+  <div class="app">
+
+    <!-- SIDEBAR -->
     <aside class="sidebar">
-      <div class="sidebar__logo">
-        <!-- Cambia la ruta si tu logo está en otra carpeta -->
-        <img
-          src="public/assets/images/logo-ecopulse.png"
-          alt="EcoPulse"
-        />
+      <div class="logo">
+        <!-- Cambia la ruta del logo si es necesario -->
+        <!-- <img src="assets/images/ecopulse-logo.png" alt="EcoPulse" /> -->
+        <div class="logo-mark">Eco</div>
+        <div class="logo-text">
+          <span>Eco</span><span>Pulse</span>
+        </div>
       </div>
 
-      <nav class="sidebar__nav" aria-label="Navegación principal">
-        <button class="sidebar__item is-active" data-view-target="home">
-          <span class="material-symbols-outlined">home</span>
-          <span>Inicio</span>
+      <nav class="nav">
+        <button class="nav-item active" data-view="view-home" data-nav="home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Inicio</span>
         </button>
-
-        <button class="sidebar__item" data-view-target="map">
-          <span class="material-symbols-outlined">public</span>
-          <span>Mapa</span>
+        <button class="nav-item" data-view="view-map" data-nav="map">
+          <span class="nav-icon">🌍</span>
+          <span class="nav-label">Mapa</span>
         </button>
-
-        <button class="sidebar__item" data-view-target="report">
-          <span class="material-symbols-outlined">add</span>
-          <span>Crear Reporte</span>
+        <button class="nav-item" data-view="view-create-report" data-nav="create">
+          <span class="nav-icon">＋</span>
+          <span class="nav-label">Crear Reporte</span>
         </button>
-
-        <button class="sidebar__item" data-view-target="noise">
-          <span class="material-symbols-outlined">mic</span>
-          <span>Medición de ruido</span>
+        <button class="nav-item" data-view="view-noise-measure" data-nav="noise">
+          <span class="nav-icon">🎙️</span>
+          <span class="nav-label">Medición de ruido</span>
         </button>
-
-        <button class="sidebar__item" data-view-target="profile">
-          <span class="material-symbols-outlined">person</span>
-          <span>Perfil</span>
+        <button class="nav-item" data-view="view-profile" data-nav="profile">
+          <span class="nav-icon">👤</span>
+          <span class="nav-label">Perfil</span>
         </button>
       </nav>
     </aside>
 
-    <!-- ============ MAIN CONTENT ============ -->
-    <main class="main">
-      <!-- ====== INICIO / HOME ====== -->
-      <section
-        class="view view--active"
-        id="view-home"
-        data-view="home"
-        aria-labelledby="home-title"
-      >
-        <header class="page-header">
-          <h1 class="page-title" id="home-title">Reportes de la comunidad</h1>
-          <p class="page-subtitle">Reporte de Emiliano Salas</p>
-        </header>
-
-        <article class="report-card" data-open-report>
-          <div class="report-card__image">
-            <!-- Usa tu propia imagen de reporte aquí -->
-            <img
-              src="public/assets/images/report-example.jpg"
-              alt="Persona cubriéndose los oídos por ruido de tráfico"
-            />
-          </div>
-
-          <div class="report-card__meta">
-            <p>
-              fecha: 10/11/2025<br />
-              hora: 16:34
-            </p>
-
-            <div class="report-card__comments">
-              <span>2</span>
-              <span class="material-symbols-outlined" aria-hidden="true">
-                chat_bubble
-              </span>
-            </div>
-          </div>
-
-          <div class="report-card__summary">
-            <p class="report-card__summary-title">
-              Ruido intenso por accidente vehicular
-            </p>
-            <p>
-              Durante la tarde se presentó ruido insoportable gracias al
-              tráfico provocado por un choque en la Av. Salaverry.
-            </p>
-          </div>
-        </article>
-      </section>
-
-      <!-- ====== MAPA ====== -->
-      <section
-        class="view"
-        id="view-map"
-        data-view="map"
-        aria-labelledby="map-title"
-      >
-        <header class="page-header">
-          <h1 class="page-title" id="map-title">Mapa de ruido de Lima</h1>
-        </header>
-
-        <div class="filter-row">
-          <label class="pill-select">
-            <span>Categoría:</span>
-            <select>
-              <option>Tráfico</option>
-              <option>Construcción</option>
-              <option>Conciertos</option>
-              <option>Industrial</option>
-            </select>
-          </label>
-        </div>
-
-        <div class="map-placeholder">
-          <!-- Reemplaza por un <img> con tu mapa de calor real -->
-          <span>Mapa de ruido de Lima</span>
-        </div>
-      </section>
-
-      <!-- ====== CREAR REPORTE – FORMULARIO ====== -->
-      <section
-        class="view"
-        id="view-create-report"
-        data-view="create-report"
-        aria-labelledby="create-report-title"
-      >
-        <header class="page-header">
-          <h1 class="page-title" id="create-report-title">
-            Reportar medición de ruido
-          </h1>
-        </header>
-
-        <form class="report-form" id="report-form">
-          <label class="form-row">
-            <span class="form-row__label">Título:</span>
-            <input
-              type="text"
-              class="form-row__input"
-              name="title"
-              placeholder="Ej. Ruido excesivo por maquinaria en obra"
-              required
-            />
-          </label>
-
-          <label class="form-row form-row--with-icon">
-            <span class="form-row__label">Ubicación exacta:</span>
-            <input
-              type="text"
-              class="form-row__input"
-              name="location"
-              placeholder="Ej. Av. San Felipe 123, Jesús María, Lima"
-              required
-            />
-            <span class="form-row__icon material-symbols-outlined"
-              aria-hidden="true"
-            >
-              location_on
-            </span>
-          </label>
-
-          <label class="form-row form-row--textarea">
-            <span class="form-row__label">Descripción:</span>
-            <textarea
-              class="form-row__input"
-              name="description"
-              rows="4"
-              placeholder="Describe qué está pasando, desde cuándo, y cómo afecta el entorno..."
-              required
-            ></textarea>
-          </label>
-
-          <div class="form-row form-row--space-between">
-            <span class="form-row__label">Reporte Anónimo</span>
-            <button
-              type="button"
-              class="toggle"
-              aria-pressed="true"
-              aria-label="Cambiar reporte anónimo"
-            >
-              <span class="toggle__thumb"></span>
-            </button>
-          </div>
-
-          <label class="form-row form-row--space-between">
-            <span class="form-row__label">Categoría</span>
-            <select class="form-row__select" name="category">
-              <option>Tráfico</option>
-              <option>Construcción</option>
-              <option>Conciertos</option>
-              <option>Industrial</option>
-            </select>
-          </label>
-
-          <div class="media-upload">
-            <p>Subir archivos multimedia</p>
-            <label class="media-upload__button">
-              <span class="material-symbols-outlined" aria-hidden="true">
-                upload
-              </span>
-              <span>Seleccionar archivos</span>
-              <input type="file" name="media" multiple hidden />
-            </label>
-          </div>
-
-          <div class="form-actions">
-            <button type="submit" class="btn btn--primary">
-              Reportar
-            </button>
-          </div>
-        </form>
-      </section>
-
-      <!-- ====== CREAR REPORTE – ÉXITO ====== -->
-      <section
-        class="view"
-        id="view-report-success"
-        data-view="report-success"
-        aria-labelledby="report-success-title"
-      >
-        <header class="page-header page-header--center">
-          <h1 class="page-title" id="report-success-title">
-            Se publicó el reporte
-          </h1>
-        </header>
-
-        <div class="status-icon">
-          <span class="material-symbols-outlined" aria-hidden="true">
-            check
-          </span>
-        </div>
-        <p class="status-text">
-          Tu reporte fue enviado a la comunidad.
-        </p>
-
-        <div class="status-actions">
-          <button
-            class="btn btn--ghost"
-            data-go-view="view-home"
-            data-go-nav="home"
-          >
-            Volver al inicio
-          </button>
-          <button
-            class="btn btn--primary"
-            data-go-view="view-create-report"
-            data-go-nav="report"
-          >
-            Crear otro reporte
-          </button>
-        </div>
-      </section>
-
-      <!-- ====== DETALLE DE REPORTE ====== -->
-      <section
-        class="view"
-        id="view-report-detail"
-        data-view="report-detail"
-        aria-labelledby="report-detail-title"
-      >
-        <button
-          class="back-button"
-          type="button"
-          data-back-view="view-home"
-          data-back-nav="home"
-          aria-label="Volver a los reportes"
-        >
-          <span class="material-symbols-outlined">arrow_back</span>
+    <!-- MAIN AREA -->
+    <div class="main">
+      <header class="main-header">
+        <button id="settingsButton" class="icon-button" aria-label="Abrir ajustes">
+          ⚙️
         </button>
+      </header>
 
-        <header class="page-header page-header--center">
-          <h1 class="page-title" id="report-detail-title">
+      <!-- HOME: REPORTES DE LA COMUNIDAD -->
+      <section id="view-home" class="view active" aria-labelledby="home-title">
+        <div class="view-inner">
+          <h1 id="home-title" class="view-title" data-i18n-key="homeTitle">
+            Reportes de la comunidad
+          </h1>
+
+          <div class="home-reports">
+            <article class="report-card clickable" id="homeReportCard">
+              <h2 class="report-author">
+                Reporte de Emilio Salas
+              </h2>
+
+              <div class="report-image-wrapper">
+                <img
+                  src="assets/images/reporte-vehicular.jpg"
+                  alt="Niño tapándose los oídos por ruido vehicular"
+                  class="report-image"
+                  onerror="this.style.display='none'"
+                />
+              </div>
+
+              <div class="report-meta">
+                <div class="report-date-time">
+                  <span>fecha: 10/11/2025</span>
+                  <span>hora: 16:34</span>
+                </div>
+                <div class="report-comments-count">
+                  <span>2</span>
+                  <span>💬</span>
+                </div>
+              </div>
+
+              <div class="report-summary card-elevated">
+                <p class="report-summary-title">
+                  Ruido intenso por accidente vehicular
+                </p>
+                <p>
+                  Durante la tarde se presentó ruido insoportable gracias al
+                  tráfico provocado por un choque en la Av. Salaverry.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- DETALLE DEL REPORTE -->
+      <section id="view-report-detail" class="view" aria-labelledby="report-detail-title">
+        <div class="view-inner">
+          <button class="back-button" data-back="view-home" aria-label="Volver a inicio">
+            ←
+          </button>
+
+          <h1 id="report-detail-title" class="view-title">
             Reporte de Emiliano Salas
           </h1>
-        </header>
 
-        <div class="report-detail">
-          <div class="report-detail__left">
-            <div class="card card--text">
-              <p class="card__title">
+          <div class="report-detail-layout">
+            <div class="card-elevated report-detail-description">
+              <p class="report-summary-title">
                 Ruido intenso por accidente vehicular
               </p>
               <p>
-                Durante la tarde se presentó ruido insoportable gracias al
-                tráfico provocado por un choque en la Av. Salaverry.
+                Durante la tarde se presentó ruido insoportable gracias al tráfico
+                provocado por un choque en la Av. Salaverry.
               </p>
             </div>
-          </div>
 
-          <div class="report-detail__right">
-            <p class="report-detail__meta">
-              fecha: 10/11/2025<br />
-              hora: 16:34
-            </p>
-            <div class="report-detail__image">
-              <img
-                src="public/assets/images/report-example.jpg"
-                alt="Persona cubriéndose los oídos por ruido de tráfico"
-              />
-            </div>
-          </div>
-        </div>
-
-        <section class="comments">
-          <h2 class="comments__title">Comentarios</h2>
-
-          <div class="comment">
-            <div class="comment__header">
-              <div class="comment__user">
-                <span
-                  class="comment__avatar material-symbols-outlined"
-                  aria-hidden="true"
-                >
-                  person
-                </span>
-                <span>Leguer Silva</span>
+            <div class="report-detail-side">
+              <div class="report-detail-meta">
+                <p>fecha: 10/11/2025</p>
+                <p>hora: 16:34</p>
+              </div>
+              <div class="report-image-small-wrapper">
+                <img
+                  src="assets/images/reporte-vehicular.jpg"
+                  alt="Niño tapándose los oídos por ruido vehicular"
+                  class="report-image-small"
+                  onerror="this.style.display='none'"
+                />
               </div>
             </div>
-            <div class="comment__body">
-              En la mañana pasé por ahí y no podía soportar el ruido.
-            </div>
           </div>
 
-          <div class="comment">
-            <div class="comment__header">
-              <div class="comment__user">
-                <span
-                  class="comment__avatar material-symbols-outlined"
-                  aria-hidden="true"
-                >
-                  person
-                </span>
-                <span>William Soto</span>
-              </div>
-            </div>
-            <div class="comment__body">
-              Vivo cerca y el ruido es molesto, han pasado varias horas y
-              todavía no hay solución.
-            </div>
-          </div>
-        </section>
+          <section class="comments-section">
+            <h2>Comentarios</h2>
 
-        <button
-          class="fab"
-          type="button"
-          aria-label="Agregar comentario"
-          data-open-comment
-        >
-          <span class="material-symbols-outlined">add_comment</span>
-        </button>
-      </section>
+            <article class="comment">
+              <header class="comment-header">
+                <div class="comment-user">
+                  <span class="comment-avatar">👤</span>
+                  <span class="comment-name">Leguer Silva</span>
+                </div>
+                <button class="icon-button small" aria-label="Eliminar comentario simulado">
+                  🗑️
+                </button>
+              </header>
+              <p class="comment-body">
+                En la mañana pasé por ahí y no podía soportar el ruido.
+              </p>
+            </article>
 
-      <!-- ====== FORMULARIO DE COMENTARIO ====== -->
-      <section
-        class="view"
-        id="view-comment-form"
-        data-view="comment-form"
-        aria-labelledby="comment-form-title"
-      >
-        <button
-          class="back-button"
-          type="button"
-          data-back-view="view-report-detail"
-          data-back-nav="home"
-          aria-label="Volver al reporte"
-        >
-          <span class="material-symbols-outlined">arrow_back</span>
-        </button>
+            <article class="comment">
+              <header class="comment-header">
+                <div class="comment-user">
+                  <span class="comment-avatar">👤</span>
+                  <span class="comment-name">William Soto</span>
+                </div>
+              </header>
+              <p class="comment-body">
+                Vivo cerca y el ruido es molesto, han pasado varias horas y todavía no hay solución.
+              </p>
+            </article>
+          </section>
 
-        <header class="page-header page-header--center">
-          <h1 class="page-title" id="comment-form-title">Comentario</h1>
-        </header>
-
-        <div class="pill-label">
-          Reporte de Emiliano Salas
-        </div>
-
-        <form class="comment-form" id="comment-form-element">
-          <label class="form-row form-row--textarea">
-            <span class="form-row__label sr-only">Comentario</span>
-            <textarea
-              class="form-row__input"
-              name="comment"
-              rows="4"
-              placeholder="Escribe tu comentario..."
-              required
-            >
-Comentario: Las autoridades deberían hacerse cargo y ser efectivos ante este tipo de situaciones que afectan a la salud.</textarea
-            >
-          </label>
-
-          <div class="form-actions form-actions--center">
-            <button type="submit" class="btn btn--primary">
-              Publicar
-            </button>
-          </div>
-        </form>
-      </section>
-
-      <!-- ====== COMENTARIO PUBLICADO ====== -->
-      <section
-        class="view"
-        id="view-comment-success"
-        data-view="comment-success"
-        aria-labelledby="comment-success-title"
-      >
-        <button
-          class="back-button"
-          type="button"
-          data-back-view="view-report-detail"
-          data-back-nav="home"
-          aria-label="Volver al reporte"
-        >
-          <span class="material-symbols-outlined">arrow_back</span>
-        </button>
-
-        <header class="page-header page-header--center">
-          <h1 class="page-title" id="comment-success-title">
-            Se publicó el comentario
-          </h1>
-        </header>
-
-        <div class="status-icon">
-          <span class="material-symbols-outlined" aria-hidden="true">
-            check
-          </span>
-        </div>
-
-        <div class="form-actions form-actions--center">
           <button
-            class="btn btn--primary"
-            data-go-view="view-report-detail"
-            data-go-nav="home"
+            id="addCommentButton"
+            class="floating-comment-button"
+            aria-label="Agregar comentario"
           >
-            Volver al reporte
+            <span class="floating-icon">＋</span>
           </button>
         </div>
       </section>
 
-      <!-- ====== MEDICIÓN DE RUIDO ====== -->
-      <section
-        class="view"
-        id="view-noise-measure"
-        data-view="noise-measure"
-        aria-labelledby="noise-measure-title"
-      >
-        <button
-          class="back-button"
-          type="button"
-          data-back-view="view-home"
-          data-back-nav="home"
-          aria-label="Volver al inicio"
-        >
-          <span class="material-symbols-outlined">arrow_back</span>
-        </button>
+      <!-- FORMULARIO DE COMENTARIO -->
+      <section id="view-comment-form" class="view" aria-labelledby="comment-form-title">
+        <div class="view-inner narrow">
+          <button class="back-button" data-back="view-report-detail" aria-label="Volver al reporte">
+            ←
+          </button>
 
-        <header class="page-header page-header--center">
-          <h1 class="page-title" id="noise-measure-title">
-            Medición de ruido
+          <h1 id="comment-form-title" class="view-title">
+            Comentario
           </h1>
-        </header>
 
-        <div class="noise-widget">
-          <div class="pill-value" id="noise-value">-- db</div>
-
-          <div class="noise-widget__mic">
-            <span
-              class="material-symbols-outlined noise-widget__mic-icon"
-              aria-hidden="true"
-            >
-              mic
-            </span>
+          <div class="card-elevated comment-report-summary">
+            Reporte de Emiliano Salas
           </div>
 
-          <div class="noise-widget__wave"></div>
+          <form id="commentForm" class="form-card">
+            <label class="form-field">
+              <span class="field-label">Comentario:</span>
+              <textarea
+                id="commentText"
+                rows="5"
+                placeholder="Escribe tu comentario aquí..."
+                required
+              ></textarea>
+            </label>
 
-          <hr class="noise-widget__divider" />
+            <button type="submit" class="primary-button">
+              Publicar
+            </button>
+          </form>
+        </div>
+      </section>
 
-          <div class="form-actions form-actions--center">
-            <button
-              type="button"
-              class="btn btn--primary"
-              id="btn-measure-noise"
-            >
-              Medir
+      <!-- COMENTARIO PUBLICADO -->
+      <section id="view-comment-success" class="view">
+        <div class="view-inner center">
+          <p class="success-message">Se publicó el comentario</p>
+          <div class="big-check">✓</div>
+
+          <div class="success-actions">
+            <button class="secondary-button" data-back="view-report-detail">
+              Volver al reporte
+            </button>
+            <button class="secondary-button" data-back="view-home">
+              Ir al inicio
             </button>
           </div>
+        </div>
+      </section>
 
-          <p class="noise-widget__label" id="noise-label">
+      <!-- MAPA -->
+      <section id="view-map" class="view" aria-labelledby="map-title">
+        <div class="view-inner">
+          <h1 id="map-title" class="view-title" data-i18n-key="mapTitle">
+            Mapa de ruido de Lima
+          </h1>
+
+          <div class="map-controls">
+            <label class="field-label">
+              Categoría:
+              <select id="mapCategory">
+                <option value="all">Todas</option>
+                <option value="low">Poco ruido</option>
+                <option value="medium">Ruido moderado</option>
+                <option value="high">Alto ruido</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="map-legend">
+            <span class="legend-item low">Poco ruido</span>
+            <span class="legend-item medium">Moderado</span>
+            <span class="legend-item high">Alto ruido</span>
+          </div>
+
+          <div class="map-placeholder" aria-label="Mapa simulado de Lima">
+            <div class="map-zone low" data-category="low">Zona residencial</div>
+            <div class="map-zone medium" data-category="medium">Zona comercial</div>
+            <div class="map-zone high" data-category="high">Zona industrial</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CREAR REPORTE -->
+      <section id="view-create-report" class="view" aria-labelledby="create-report-title">
+        <div class="view-inner narrow">
+          <h1 id="create-report-title" class="view-title" data-i18n-key="createTitle">
+            Reportar medición de ruido
+          </h1>
+
+          <form id="createReportForm" class="form-card">
+            <label class="form-field">
+              <span class="field-label">Título:</span>
+              <input type="text" id="reportTitle" required />
+            </label>
+
+            <label class="form-field location-field">
+              <span class="field-label">Ubicación exacta:</span>
+              <div class="input-with-icon">
+                <input
+                  type="text"
+                  id="reportLocation"
+                  placeholder="Ej. Av. San Felipe 123, Jesús María, Lima"
+                  required
+                />
+                <span class="field-icon" aria-hidden="true">📍</span>
+              </div>
+            </label>
+
+            <label class="form-field">
+              <span class="field-label">Descripción:</span>
+              <textarea
+                id="reportDescription"
+                rows="6"
+                required
+                placeholder="Describe el ruido, su duración y cómo afecta a las personas..."
+              ></textarea>
+            </label>
+
+            <label class="form-field switch-row">
+              <span class="field-label">Reporte anónimo</span>
+              <label class="switch">
+                <input type="checkbox" id="reportAnonymous" />
+                <span class="slider"></span>
+              </label>
+            </label>
+
+            <label class="form-field">
+              <span class="field-label">Categoría:</span>
+              <select id="reportCategory" required>
+                <option value="" disabled selected>Selecciona una categoría</option>
+                <option value="construccion">Construcción</option>
+                <option value="trafico">Tráfico</option>
+                <option value="fiestas">Fiestas / conciertos</option>
+                <option value="industria">Industria</option>
+                <option value="otro">Otro</option>
+              </select>
+            </label>
+
+            <div class="form-field">
+              <span class="field-label">Subir archivos multimedia</span>
+              <button
+                type="button"
+                id="uploadMediaButton"
+                class="secondary-button full"
+              >
+                Subir archivos multimedia ⬆️
+              </button>
+              <input
+                type="file"
+                id="reportMediaInput"
+                multiple
+                accept="image/*,video/*"
+                class="hidden-input"
+              />
+              <div id="mediaPreview" class="media-preview"></div>
+            </div>
+
+            <button type="submit" class="primary-button full">
+              Reportar
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- REPORTE PUBLICADO -->
+      <section id="view-report-success" class="view">
+        <div class="view-inner center">
+          <p class="success-message">Se publicó el reporte</p>
+          <div class="big-check">✓</div>
+
+          <div class="success-actions">
+            <button class="secondary-button" data-back="view-create-report">
+              Crear otro reporte
+            </button>
+            <button class="secondary-button" data-back="view-home">
+              Ir al inicio
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- MEDICIÓN DE RUIDO -->
+      <section id="view-noise-measure" class="view" aria-labelledby="noise-title">
+        <div class="view-inner center">
+          <h1 id="noise-title" class="view-title">
+            Medición de ruido
+          </h1>
+
+          <div id="decibelDisplay" class="decibel-pill">-- db</div>
+
+          <div class="noise-mic-icon">🎙️</div>
+
+          <div id="noiseWave" class="noise-wave"></div>
+
+          <button id="measureButton" class="primary-button large">
+            Medir
+          </button>
+
+          <p id="environmentText" class="environment-label">
             Ambiente silencioso
           </p>
         </div>
       </section>
 
-      <!-- ====== AUDIO (PRUEBA DE MICRÓFONO) ====== -->
-      <section
-        class="view"
-        id="view-audio-test"
-        data-view="audio-test"
-        aria-labelledby="audio-title"
-      >
-        <button
-          class="back-button"
-          type="button"
-          data-back-view="view-noise-measure"
-          data-back-nav="noise"
-          aria-label="Volver a medición de ruido"
-        >
-          <span class="material-symbols-outlined">arrow_back</span>
-        </button>
+      <!-- AJUSTES -->
+      <section id="view-settings" class="view" aria-labelledby="settings-title">
+        <div class="view-inner narrow">
+          <button
+            id="settingsBackButton"
+            class="back-button"
+            aria-label="Volver a la pantalla anterior"
+          >
+            ←
+          </button>
 
-        <header class="page-header page-header--center">
-          <h1 class="page-title" id="audio-title">Audio</h1>
-        </header>
+          <h1 id="settings-title" class="view-title" data-i18n-key="settingsTitle">
+            Ajustes
+          </h1>
 
-        <div class="audio-widget">
-          <label class="form-row form-row--space-between">
-            <span class="form-row__label">Micrófono</span>
-            <select class="form-row__select">
-              <option>Micrófono 1</option>
-              <option>Micrófono 2</option>
-            </select>
-          </label>
-
-          <div class="pill-value" id="audio-value">0 db</div>
-
-          <div class="audio-widget__mic">
-            <span
-              class="material-symbols-outlined audio-widget__mic-icon"
-              aria-hidden="true"
-            >
-              mic
-            </span>
-          </div>
-
-          <div class="noise-widget__wave"></div>
-
-          <hr class="noise-widget__divider" />
-
-          <div class="form-actions form-actions--center">
+          <div class="settings-list">
             <button
+              class="settings-item"
+              id="settingsAudioButton"
               type="button"
-              class="btn btn--primary"
-              id="btn-audio-test"
             >
+              <span data-i18n-key="settingsAudio">Audio</span>
+            </button>
+
+            <div class="settings-item settings-language">
+              <span class="settings-label" data-i18n-key="settingsLanguage">
+                Idioma
+              </span>
+              <select id="languageSelect">
+                <option value="es">Español</option>
+                <option value="en">English</option>
+              </select>
+            </div>
+
+            <button
+              class="settings-item"
+              id="settingsNoiseButton"
+              type="button"
+            >
+              <span data-i18n-key="settingsNoise">Ruido</span>
+            </button>
+
+            <button
+              class="settings-item danger"
+              id="logoutRow"
+              type="button"
+            >
+              <span data-i18n-key="settingsLogout">Cerrar sesión</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- AJUSTES > AUDIO -->
+      <section id="view-audio-settings" class="view" aria-labelledby="audio-settings-title">
+        <div class="view-inner narrow">
+          <button class="back-button" data-back="view-settings" aria-label="Volver a ajustes">
+            ←
+          </button>
+
+          <h1 id="audio-settings-title" class="view-title">
+            Audio
+          </h1>
+
+          <div class="form-card audio-card">
+            <label class="form-field">
+              <span class="field-label">Micrófono</span>
+              <select id="microphoneSelect">
+                <option value="mic1">Micrófono 1</option>
+                <option value="mic2">Micrófono 2</option>
+              </select>
+            </label>
+
+            <div class="decibel-pill small" id="testDecibelDisplay">0 db</div>
+
+            <div class="noise-mic-icon large">🎙️</div>
+
+            <div id="audioWave" class="noise-wave small"></div>
+
+            <button id="audioTestButton" class="primary-button full">
               Probar
             </button>
-          </div>
 
-          <p class="noise-widget__label" id="audio-status">
-            Sonido detectado
-          </p>
+            <p id="audioStatusText" class="environment-label">
+              Sonido no detectado
+            </p>
+          </div>
         </div>
       </section>
 
-      <!-- ====== PERFIL ====== -->
-      <section
-        class="view"
-        id="view-profile-main"
-        data-view="profile-main"
-        aria-labelledby="profile-title"
-      >
-        <header class="page-header page-header--center page-header--with-gear">
-          <h1 class="page-title" id="profile-title">Perfil</h1>
-
-          <button
-            class="icon-button"
-            type="button"
-            aria-label="Abrir ajustes"
-            data-open-settings
-          >
-            <span class="material-symbols-outlined">settings</span>
+      <!-- AJUSTES > RUIDO -->
+      <section id="view-noise-settings" class="view" aria-labelledby="noise-settings-title">
+        <div class="view-inner narrow">
+          <button class="back-button" data-back="view-settings" aria-label="Volver a ajustes">
+            ←
           </button>
-        </header>
 
-        <div class="profile">
-          <button
-            type="button"
-            class="profile__avatar-btn"
-            aria-label="Cambiar foto de perfil"
-            data-open-profile-photo
-          >
-            <div class="profile__avatar">
+          <h1 id="noise-settings-title" class="view-title">
+            Ruido
+          </h1>
+
+          <div class="form-card">
+            <label class="form-field switch-row">
+              <span class="field-label">Límite (db)</span>
+              <label class="switch">
+                <input type="checkbox" id="noiseLimitToggle" />
+                <span class="slider"></span>
+              </label>
+            </label>
+
+            <label class="form-field switch-row">
+              <span class="field-label">Avisar cada hora</span>
+              <label class="switch">
+                <input type="checkbox" id="noiseHourlyToggle" checked />
+                <span class="slider"></span>
+              </label>
+            </label>
+
+            <label class="form-field">
+              <span class="field-label">Categorías</span>
+              <select id="noiseCategorySelect">
+                <option value="all">Todas</option>
+                <option value="home">Hogar</option>
+                <option value="work">Trabajo</option>
+                <option value="night">Nocturno</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- MODAL CERRAR SESIÓN -->
+      <div id="logoutModal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+        <div class="modal">
+          <p>¿Estás seguro que quieres cerrar sesión?</p>
+          <div class="modal-actions">
+            <button id="confirmLogoutButton" class="primary-button">
+              Cerrar
+            </button>
+            <button id="cancelLogoutButton" class="secondary-button">
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PERFIL -->
+      <section id="view-profile" class="view" aria-labelledby="profile-title">
+        <div class="view-inner narrow profile-view">
+          <h1 id="profile-title" class="view-title">
+            Perfil
+          </h1>
+
+          <div class="profile-photo-wrapper">
+            <div id="profilePhotoContainer" class="profile-photo" role="button" tabindex="0">
               <img
-                src="public/assets/images/profile-example.jpg"
+                id="profilePhoto"
+                src="assets/images/profile-leguer.png"
                 alt="Foto de perfil"
+                onerror="this.style.display='none'"
               />
             </div>
-            <span
-              class="profile__avatar-edit material-symbols-outlined"
-              aria-hidden="true"
-            >
-              edit
-            </span>
-          </button>
-
-          <div class="profile__field">
-            <label>Nombre</label>
-            <div class="profile__value">Leguer Silva</div>
-          </div>
-
-          <div class="profile__field">
-            <label>Correo electrónico</label>
-            <div class="profile__value">leguersilva@gmail.com</div>
-          </div>
-
-          <div class="profile__field">
-            <label>Contraseña</label>
-            <div class="profile__value profile__value--password">
-              ****************
-              <span
-                class="material-symbols-outlined profile__eye-icon"
-                aria-hidden="true"
-              >
-                visibility_off
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====== PERFIL – ACCIONES DE FOTO ====== -->
-      <section
-        class="view"
-        id="view-profile-photo"
-        data-view="profile-photo"
-        aria-labelledby="profile-photo-title"
-      >
-        <button
-          class="back-button"
-          type="button"
-          data-back-view="view-profile-main"
-          data-back-nav="profile"
-          aria-label="Volver al perfil"
-        >
-          <span class="material-symbols-outlined">arrow_back</span>
-        </button>
-
-        <header class="page-header page-header--center">
-          <h1 class="page-title" id="profile-photo-title">Perfil</h1>
-        </header>
-
-        <div class="profile profile--photo-actions">
-          <div class="profile__avatar">
-            <img
-              src="public/assets/images/profile-example.jpg"
-              alt="Foto de perfil"
-            />
-          </div>
-
-          <div class="profile-photo-actions">
-            <button type="button" class="profile-photo-actions__item">
-              Actualizar Foto
-            </button>
-            <button type="button" class="profile-photo-actions__item">
-              Tomar Foto
-            </button>
-            <button type="button" class="profile-photo-actions__item">
-              Eliminar Foto
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====== AJUSTES ====== -->
-      <section
-        class="view"
-        id="view-settings-main"
-        data-view="settings-main"
-        aria-labelledby="settings-title"
-      >
-        <button
-          class="back-button"
-          type="button"
-          data-back-view="view-profile-main"
-          data-back-nav="profile"
-          aria-label="Volver al perfil"
-        >
-          <span class="material-symbols-outlined">arrow_back</span>
-        </button>
-
-        <header class="page-header page-header--center">
-          <h1 class="page-title" id="settings-title">Ajustes</h1>
-        </header>
-
-        <div class="settings-list">
-          <button
-            type="button"
-            class="settings-item"
-            data-open-audio-from-settings
-          >
-            <span>Audio</span>
-          </button>
-
-          <div class="settings-item settings-item--space-between">
-            <span>Idioma</span>
-            <select class="settings-select">
-              <option>Español</option>
-              <option>Inglés</option>
-            </select>
-          </div>
-
-          <button
-            type="button"
-            class="settings-item"
-            data-open-noise-settings
-          >
-            <span>Ruido</span>
-          </button>
-
-          <button
-            type="button"
-            class="settings-item"
-            data-logout
-          >
-            <span>Cerrar Sesión</span>
-          </button>
-        </div>
-      </section>
-
-      <!-- ====== AJUSTES – RUIDO ====== -->
-      <section
-        class="view"
-        id="view-settings-noise"
-        data-view="settings-noise"
-        aria-labelledby="noise-settings-title"
-      >
-        <button
-          class="back-button"
-          type="button"
-          data-back-view="view-settings-main"
-          data-back-nav="profile"
-          aria-label="Volver a ajustes"
-        >
-          <span class="material-symbols-outlined">arrow_back</span>
-        </button>
-
-        <header class="page-header page-header--center">
-          <h1 class="page-title" id="noise-settings-title">Ruido</h1>
-        </header>
-
-        <div class="settings-list">
-          <div class="settings-item settings-item--space-between">
-            <span>Límite (db)</span>
             <button
-              type="button"
-              class="toggle"
-              aria-pressed="false"
+              id="editPhotoButton"
+              class="icon-button profile-edit-icon"
+              aria-label="Cambiar foto de perfil"
             >
-              <span class="toggle__thumb"></span>
+              ✏️
             </button>
           </div>
 
-          <div class="settings-item settings-item--space-between">
-            <span>Avisar cada hora</span>
-            <button
-              type="button"
-              class="toggle toggle--on"
-              aria-pressed="true"
-            >
-              <span class="toggle__thumb"></span>
+          <form id="profileForm" class="form-card">
+            <label class="form-field">
+              <span class="field-label">Nombre</span>
+              <input type="text" id="profileName" />
+            </label>
+
+            <label class="form-field">
+              <span class="field-label">Correo electrónico</span>
+              <input type="email" id="profileEmail" />
+            </label>
+
+            <label class="form-field password-field">
+              <span class="field-label">Contraseña</span>
+              <div class="input-with-icon">
+                <input
+                  type="password"
+                  id="profilePassword"
+                  autocomplete="new-password"
+                />
+                <button
+                  type="button"
+                  id="togglePassword"
+                  class="icon-button"
+                  aria-label="Mostrar u ocultar contraseña"
+                >
+                  👁️
+                </button>
+              </div>
+            </label>
+
+            <button type="submit" class="primary-button full">
+              Guardar cambios
             </button>
-          </div>
 
-          <button
-            type="button"
-            class="settings-item"
-            data-open-categories
-          >
-            <span>Categorías</span>
-          </button>
+            <p id="profileSaveMessage" class="info-text hidden">
+              Cambios guardados (simulado)
+            </p>
+          </form>
         </div>
       </section>
 
-      <!-- ====== CATEGORÍAS ====== -->
-      <section
-        class="view"
-        id="view-settings-categories"
-        data-view="settings-categories"
-        aria-labelledby="categories-title"
-      >
-        <button
-          class="back-button"
-          type="button"
-          data-back-view="view-settings-noise"
-          data-back-nav="profile"
-          aria-label="Volver a ruido"
-        >
-          <span class="material-symbols-outlined">arrow_back</span>
-        </button>
-
-        <header class="page-header page-header--center">
-          <h1 class="page-title" id="categories-title">Categorías</h1>
-        </header>
-
-        <div class="settings-list">
-          <div class="settings-item settings-item--space-between">
-            <span>Tráfico</span>
-            <div class="settings-item__controls">
-              <button
-                type="button"
-                class="toggle toggle--on"
-                aria-pressed="true"
-              >
-                <span class="toggle__thumb"></span>
-              </button>
-              <button
-                type="button"
-                class="icon-button icon-button--small"
-                aria-label="Eliminar categoría Tráfico"
-              >
-                <span class="material-symbols-outlined">delete</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="settings-item settings-item--space-between">
-            <span>Conciertos</span>
-            <div class="settings-item__controls">
-              <button
-                type="button"
-                class="toggle toggle--on"
-                aria-pressed="true"
-              >
-                <span class="toggle__thumb"></span>
-              </button>
-              <button
-                type="button"
-                class="icon-button icon-button--small"
-                aria-label="Eliminar categoría Conciertos"
-              >
-                <span class="material-symbols-outlined">delete</span>
-              </button>
-            </div>
-          </div>
-
-          <button type="button" class="settings-item settings-item--add">
-            <span class="material-symbols-outlined" aria-hidden="true">
-              add
-            </span>
+      <!-- MENÚ DE FOTO DE PERFIL -->
+      <div id="photoMenuOverlay" class="modal-overlay hidden" role="dialog" aria-modal="true">
+        <div class="modal photo-menu">
+          <h2>Foto de perfil</h2>
+          <button id="btnUpdatePhoto" class="secondary-button full">
+            Actualizar foto
           </button>
+          <button id="btnTakePhoto" class="secondary-button full">
+            Tomar foto
+          </button>
+          <button id="btnDeletePhoto" class="secondary-button full danger-outline">
+            Eliminar foto
+          </button>
+          <button id="btnClosePhotoMenu" class="text-button">
+            Cancelar
+          </button>
+
+          <input
+            type="file"
+            id="uploadPhotoInput"
+            accept="image/*"
+            class="hidden-input"
+          />
+          <input
+            type="file"
+            id="capturePhotoInput"
+            accept="image/*"
+            capture="user"
+            class="hidden-input"
+          />
         </div>
-      </section>
-    </main>
-  </div>
+      </div>
+
+    </div> <!-- /main -->
+  </div> <!-- /app -->
+
+  <script src="public/assets/scripts/app.js" defer></script>
 </body>
 </html>

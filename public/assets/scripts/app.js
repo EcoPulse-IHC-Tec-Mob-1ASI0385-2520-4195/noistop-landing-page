@@ -1,289 +1,583 @@
 document.addEventListener("DOMContentLoaded", () => {
   const views = document.querySelectorAll(".view");
-  const sidebarButtons = document.querySelectorAll(".sidebar__item");
-  const main = document.querySelector(".main");
+  const navItems = document.querySelectorAll(".nav-item");
+  const settingsButton = document.getElementById("settingsButton");
+  const settingsBackButton = document.getElementById("settingsBackButton");
+  const logoutRow = document.getElementById("logoutRow");
+  const logoutModal = document.getElementById("logoutModal");
+  const confirmLogoutButton = document.getElementById("confirmLogoutButton");
+  const cancelLogoutButton = document.getElementById("cancelLogoutButton");
 
-  const mainViewByNav = {
-    home: "view-home",
-    map: "view-map",
-    report: "view-create-report",
-    noise: "view-noise-measure",
-    profile: "view-profile-main",
-  };
+  let currentViewId = "view-home";
+  let previousViewId = "view-home";
 
-  function activateNav(navKey) {
-    if (!navKey) return;
-    sidebarButtons.forEach((btn) => {
-      btn.classList.toggle(
-        "is-active",
-        btn.dataset.viewTarget === navKey
-      );
+  // Helper to show view ------------------------------------------------------
+
+  function showView(viewId, { fromNav = false } = {}) {
+    if (!viewId) return;
+
+    views.forEach((v) => {
+      v.classList.toggle("active", v.id === viewId);
+    });
+
+    if (!fromNav && viewId !== "view-settings") {
+      // keep nav highlight when going into internals like detail / profile photo, etc.
+      // nothing extra
+    }
+
+    currentViewId = viewId;
+  }
+
+  function setNavActiveByView(viewId) {
+    navItems.forEach((btn) => {
+      const target = btn.dataset.view;
+      btn.classList.toggle("active", target === viewId);
     });
   }
 
-  function showView(viewId, navKey) {
-    views.forEach((view) => {
-      view.classList.toggle("view--active", view.id === viewId);
-    });
-    if (navKey) activateNav(navKey);
-    if (main) main.scrollTop = 0;
-  }
+  // Navigation from sidebar --------------------------------------------------
 
-  /* ---- Navegación principal (sidebar) ---- */
-
-  sidebarButtons.forEach((btn) => {
+  navItems.forEach((btn) => {
     btn.addEventListener("click", () => {
-      const key = btn.dataset.viewTarget;
-      const viewId = mainViewByNav[key];
-      if (viewId) showView(viewId, key);
+      const targetView = btn.dataset.view;
+      previousViewId = targetView;
+      setNavActiveByView(targetView);
+      showView(targetView, { fromNav: true });
     });
   });
 
-  /* ---- Botones de "volver" ---- */
+  // Back buttons (simple ones that point to a specific view) -----------------
 
-  document.querySelectorAll("[data-back-view]").forEach((btn) => {
+  document.querySelectorAll(".back-button[data-back]").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const viewId = btn.dataset.backView;
-      const navKey = btn.dataset.backNav || null;
-      if (viewId) showView(viewId, navKey);
+      const target = btn.dataset.back;
+      if (!target) return;
+      showView(target);
+      // also re-sync nav for root-level views
+      setNavActiveByView(target);
     });
   });
 
-  /* ---- Home -> Detalle de reporte ---- */
+  // Home -> Report detail ----------------------------------------------------
 
-  const reportCard = document.querySelector("[data-open-report]");
-  if (reportCard) {
-    reportCard.addEventListener("click", () => {
-      showView("view-report-detail", "home");
+  const homeReportCard = document.getElementById("homeReportCard");
+  if (homeReportCard) {
+    homeReportCard.addEventListener("click", () => {
+      previousViewId = "view-home";
+      showView("view-report-detail");
     });
   }
 
-  /* ---- Crear reporte -> Éxito ---- */
+  // Report detail -> Comment form -------------------------------------------
 
-  const reportForm = document.getElementById("report-form");
-  if (reportForm) {
-    reportForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      showView("view-report-success", "report");
+  const addCommentButton = document.getElementById("addCommentButton");
+  if (addCommentButton) {
+    addCommentButton.addEventListener("click", () => {
+      showView("view-comment-form");
     });
   }
 
-  /* Botones desde pantallas de éxito (report / comment) */
+  // Comment form submit ------------------------------------------------------
 
-  document.querySelectorAll("[data-go-view]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const viewId = btn.dataset.goView;
-      const navKey = btn.dataset.goNav || null;
-      if (viewId) showView(viewId, navKey);
-    });
-  });
-
-  /* ---- Detalle de reporte -> Formulario de comentario ---- */
-
-  const addCommentBtn = document.querySelector("[data-open-comment]");
-  if (addCommentBtn) {
-    addCommentBtn.addEventListener("click", () => {
-      showView("view-comment-form", "home");
-    });
-  }
-
-  /* ---- Formulario de comentario -> Éxito ---- */
-
-  const commentForm = document.getElementById("comment-form-element");
+  const commentForm = document.getElementById("commentForm");
   if (commentForm) {
     commentForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      showView("view-comment-success", "home");
+      // Simulado: solo mostramos pantalla de éxito.
+      showView("view-comment-success");
     });
   }
 
-  /* ---- Medición de ruido: simulación sencilla ---- */
+  // Comment success buttons reuse back-button handler via data-back ---------
 
-  const btnMeasureNoise = document.getElementById("btn-measure-noise");
-  const noiseValue = document.getElementById("noise-value");
-  const noiseLabel = document.getElementById("noise-label");
+  document
+    .querySelectorAll("#view-comment-success .secondary-button[data-back]")
+    .forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = btn.dataset.back;
+        showView(target);
+        setNavActiveByView("view-home");
+      });
+    });
 
-  if (btnMeasureNoise && noiseValue && noiseLabel) {
-    btnMeasureNoise.addEventListener("click", () => {
-      const value = Math.floor(Math.random() * 141); // 0 - 140 db
-      noiseValue.textContent = `${value} db`;
+  // Settings gear -----------------------------------------------------------
 
-      let label = "Ambiente silencioso";
-      if (value >= 25 && value < 60) {
-        label = "Ambiente poco ruidoso";
-      } else if (value >= 60 && value < 90) {
-        label = "Ambiente ruidoso";
-      } else if (value >= 90) {
-        label = "Ambiente insoportable";
+  settingsButton.addEventListener("click", () => {
+    previousViewId = currentViewId;
+    showView("view-settings");
+    // no nav item active while en ajustes
+    navItems.forEach((n) => n.classList.remove("active"));
+  });
+
+  settingsBackButton.addEventListener("click", () => {
+    showView(previousViewId);
+    setNavActiveByView(previousViewId);
+  });
+
+  // Settings: go to Audio / Noise screens -----------------------------------
+
+  const settingsAudioButton = document.getElementById("settingsAudioButton");
+  const settingsNoiseButton = document.getElementById("settingsNoiseButton");
+
+  if (settingsAudioButton) {
+    settingsAudioButton.addEventListener("click", () => {
+      showView("view-audio-settings");
+    });
+  }
+
+  if (settingsNoiseButton) {
+    settingsNoiseButton.addEventListener("click", () => {
+      showView("view-noise-settings");
+    });
+  }
+
+  // Logout modal -------------------------------------------------------------
+
+  logoutRow.addEventListener("click", () => {
+    logoutModal.classList.remove("hidden");
+  });
+
+  cancelLogoutButton.addEventListener("click", () => {
+    logoutModal.classList.add("hidden");
+  });
+
+  confirmLogoutButton.addEventListener("click", () => {
+    // Simulación de cierre de sesión: redirige al login.
+    window.location.href = "login.html";
+  });
+
+  // CREATE REPORT ------------------------------------------------------------
+
+  const createReportForm = document.getElementById("createReportForm");
+  const uploadMediaButton = document.getElementById("uploadMediaButton");
+  const reportMediaInput = document.getElementById("reportMediaInput");
+  const mediaPreview = document.getElementById("mediaPreview");
+
+  if (uploadMediaButton && reportMediaInput) {
+    uploadMediaButton.addEventListener("click", () => {
+      reportMediaInput.click();
+    });
+  }
+
+  if (reportMediaInput && mediaPreview) {
+    reportMediaInput.addEventListener("change", () => {
+      mediaPreview.innerHTML = "";
+      Array.from(reportMediaInput.files).forEach((file) => {
+        const tag = document.createElement("span");
+        tag.className = "media-tag";
+        tag.textContent = file.name;
+        mediaPreview.appendChild(tag);
+      });
+    });
+  }
+
+  if (createReportForm) {
+    createReportForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      // Simulación: no se guardan datos reales.
+      createReportForm.reset();
+      if (mediaPreview) mediaPreview.innerHTML = "";
+      showView("view-report-success");
+    });
+  }
+
+  // REPORTE PUBLICADO - botones ---------------------------------------------
+
+  document
+    .querySelectorAll("#view-report-success .secondary-button[data-back]")
+    .forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = btn.dataset.back;
+        showView(target);
+        if (target === "view-home") {
+          setNavActiveByView("view-home");
+        }
+      });
+    });
+
+  // NOISE MEASUREMENT --------------------------------------------------------
+
+  const measureButton = document.getElementById("measureButton");
+  const decibelDisplay = document.getElementById("decibelDisplay");
+  const environmentText = document.getElementById("environmentText");
+  const noiseWave = document.getElementById("noiseWave");
+
+  if (measureButton && decibelDisplay && environmentText && noiseWave) {
+    measureButton.addEventListener("click", () => {
+      startNoiseMeasurement();
+    });
+  }
+
+  function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function describeEnvironment(db) {
+    if (db <= 20) return "Ambiente silencioso";
+    if (db <= 60) return "Ambiente poco ruidoso";
+    if (db <= 100) return "Ambiente ruidoso";
+    return "Ambiente insoportable";
+  }
+
+  function startNoiseMeasurement() {
+    measureButton.disabled = true;
+    measureButton.textContent = "Midiendo...";
+    noiseWave.classList.add("active");
+
+    let elapsed = 0;
+    let finalValue = 0;
+
+    const interval = setInterval(() => {
+      elapsed += 200;
+      const value = randomInt(0, 150);
+      decibelDisplay.textContent = value + " db";
+      finalValue = value;
+
+      if (elapsed >= 2000) {
+        clearInterval(interval);
+        noiseWave.classList.remove("active");
+        measureButton.disabled = false;
+        measureButton.textContent = "Medir";
+        environmentText.textContent = describeEnvironment(finalValue);
       }
-      noiseLabel.textContent = label;
+    }, 200);
+  }
+
+  // AUDIO TEST ---------------------------------------------------------------
+
+  const audioTestButton = document.getElementById("audioTestButton");
+  const testDecibelDisplay = document.getElementById("testDecibelDisplay");
+  const audioWave = document.getElementById("audioWave");
+  const audioStatusText = document.getElementById("audioStatusText");
+
+  if (audioTestButton && testDecibelDisplay && audioWave && audioStatusText) {
+    audioTestButton.addEventListener("click", () => {
+      audioWave.classList.add("active");
+      audioStatusText.textContent = "Sonido detectado";
+      let elapsed = 0;
+      const interval = setInterval(() => {
+        elapsed += 200;
+        const value = randomInt(30, 80);
+        testDecibelDisplay.textContent = value + " db";
+        if (elapsed >= 1600) {
+          clearInterval(interval);
+          audioWave.classList.remove("active");
+        }
+      }, 200);
     });
   }
 
-  /* ---- Audio: simulación sencilla ---- */
+  // NOISE SETTINGS TOGGLES (simulados) --------------------------------------
 
-  const btnAudioTest = document.getElementById("btn-audio-test");
-  const audioStatus = document.getElementById("audio-status");
+  const noiseLimitToggle = document.getElementById("noiseLimitToggle");
+  const noiseHourlyToggle = document.getElementById("noiseHourlyToggle");
+  const noiseCategorySelect = document.getElementById("noiseCategorySelect");
 
-  if (btnAudioTest && audioStatus) {
-    btnAudioTest.addEventListener("click", () => {
-      if (btnAudioTest.dataset.active === "1") {
-        btnAudioTest.dataset.active = "0";
-        audioStatus.textContent = "Sonido detectado";
+  [noiseLimitToggle, noiseHourlyToggle, noiseCategorySelect].forEach(
+    (el) => {
+      if (!el) return;
+      el.addEventListener("change", () => {
+        // Solo simulación: podrías guardar en localStorage si quisieras.
+      });
+    }
+  );
+
+  // MAPA ---------------------------------------------------------------------
+
+  const mapCategorySelect = document.getElementById("mapCategory");
+  const mapZones = document.querySelectorAll(".map-zone");
+
+  if (mapCategorySelect && mapZones.length) {
+    function updateMap() {
+      const value = mapCategorySelect.value;
+      mapZones.forEach((zone) => {
+        const category = zone.dataset.category;
+        zone.classList.remove("highlight", "dimmed");
+
+        if (value === "all") {
+          // todas visibles
+          zone.classList.remove("dimmed");
+        } else if (category === value) {
+          zone.classList.add("highlight");
+        } else {
+          zone.classList.add("dimmed");
+        }
+      });
+    }
+
+    mapCategorySelect.addEventListener("change", updateMap);
+    updateMap();
+  }
+
+  // PERFIL -------------------------------------------------------------------
+
+  const profileForm = document.getElementById("profileForm");
+  const profileNameInput = document.getElementById("profileName");
+  const profileEmailInput = document.getElementById("profileEmail");
+  const profilePasswordInput = document.getElementById("profilePassword");
+  const togglePasswordButton = document.getElementById("togglePassword");
+  const profileSaveMessage = document.getElementById("profileSaveMessage");
+  const profilePhoto = document.getElementById("profilePhoto");
+  const profilePhotoContainer = document.getElementById(
+    "profilePhotoContainer"
+  );
+  const editPhotoButton = document.getElementById("editPhotoButton");
+  const photoMenuOverlay = document.getElementById("photoMenuOverlay");
+  const btnUpdatePhoto = document.getElementById("btnUpdatePhoto");
+  const btnTakePhoto = document.getElementById("btnTakePhoto");
+  const btnDeletePhoto = document.getElementById("btnDeletePhoto");
+  const btnClosePhotoMenu = document.getElementById("btnClosePhotoMenu");
+  const uploadPhotoInput = document.getElementById("uploadPhotoInput");
+  const capturePhotoInput = document.getElementById("capturePhotoInput");
+
+  const PROFILE_STORAGE_KEY = "ecoPulseProfile";
+
+  function loadProfileFromStorage() {
+    const defaultProfile = {
+      name: "Leguer Silva",
+      email: "leguersilva@gmail.com",
+      password: "****************",
+      photo: null,
+    };
+
+    let data = defaultProfile;
+    const stored = localStorage.getItem(PROFILE_STORAGE_KEY);
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        data = Object.assign({}, defaultProfile, parsed);
+      } catch (err) {
+        // ignore
+      }
+    }
+
+    if (profileNameInput) profileNameInput.value = data.name;
+    if (profileEmailInput) profileEmailInput.value = data.email;
+    if (profilePasswordInput) profilePasswordInput.value = data.password;
+
+    if (profilePhoto) {
+      if (data.photo) {
+        profilePhoto.src = data.photo;
+        profilePhoto.dataset.photoData = data.photo;
+        profilePhoto.style.display = "block";
       } else {
-        btnAudioTest.dataset.active = "1";
-        audioStatus.textContent = "Probando micrófono...";
+        // si no hay foto guardada, se deja la que venga por defecto del HTML
       }
-    });
+    }
   }
 
-  /* ---- Perfil: abrir ajustes y acciones de foto ---- */
+  function saveProfileToStorage() {
+    if (!profileNameInput || !profileEmailInput || !profilePasswordInput) {
+      return;
+    }
 
-/* ========= LÓGICA DE PERFIL ========= */
-(function () {
-  const profileView = document.querySelector(".view--profile");
-  if (!profileView) return; // si no estamos en la vista de perfil, no hacemos nada
+    const data = {
+      name: profileNameInput.value.trim(),
+      email: profileEmailInput.value.trim(),
+      password: profilePasswordInput.value,
+      photo: profilePhoto ? profilePhoto.dataset.photoData || null : null,
+    };
 
-  const photoMenu = document.getElementById("profile-photo-menu");
-  const avatarTrigger = document.getElementById("profile-avatar-trigger");
-  const avatarImg = document.getElementById("profile-avatar-img");
-  const avatarFileInput = document.getElementById("file-avatar");
-  const passwordInput = document.getElementById("profile-password");
-  const togglePasswordBtn = document.getElementById("btn-toggle-password");
-  const profileForm = document.getElementById("profile-form");
-
-  const PLACEHOLDER_SRC = "assets/img/profile-placeholder.png"; // ajusta si es otra ruta
-
-  // --- Menú de foto de perfil ---
-  function togglePhotoMenu() {
-    if (!photoMenu) return;
-    photoMenu.hidden = !photoMenu.hidden;
+    try {
+      localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(data));
+    } catch (err) {
+      // si falla (p.e. por tamaño) simplemente ignoramos
+    }
   }
 
-  if (avatarTrigger) {
-    avatarTrigger.addEventListener("click", togglePhotoMenu);
-  }
+  loadProfileFromStorage();
 
-  if (photoMenu) {
-    photoMenu.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-photo-action]");
-      if (!button) return;
-
-      const action = button.dataset.photoAction;
-
-      if (action === "update") {
-        // Elegir foto desde archivos
-        if (avatarFileInput) {
-          avatarFileInput.removeAttribute("capture");
-          avatarFileInput.click();
-        }
-      } else if (action === "take") {
-        // Tomar foto con cámara (en móviles)
-        if (avatarFileInput) {
-          avatarFileInput.setAttribute("capture", "user");
-          avatarFileInput.click();
-        }
-      } else if (action === "remove") {
-        if (avatarImg) {
-          avatarImg.src = PLACEHOLDER_SRC;
-        }
-        photoMenu.hidden = true;
-      }
-    });
-  }
-
-  // Cuando el usuario selecciona una imagen
-  if (avatarFileInput) {
-    avatarFileInput.addEventListener("change", (event) => {
-      const file = event.target.files && event.target.files[0];
-      if (!file || !avatarImg) return;
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        avatarImg.src = e.target.result;
-        if (photoMenu) photoMenu.hidden = true;
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-
-  // --- Mostrar / ocultar contraseña ---
-  if (togglePasswordBtn && passwordInput) {
-    togglePasswordBtn.addEventListener("click", () => {
-      const isPassword = passwordInput.type === "password";
-      passwordInput.type = isPassword ? "text" : "password";
-      togglePasswordBtn.setAttribute("aria-pressed", String(isPassword));
-    });
-  }
-
-  // --- Guardar cambios (solo front) ---
   if (profileForm) {
     profileForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      // Aquí luego podrás enviar los datos a tu backend.
-      alert("Cambios de perfil guardados correctamente.");
-    });
-  }
-
-  // Cerrar menú de foto al hacer clic fuera
-  document.addEventListener("click", (event) => {
-    if (!photoMenu || photoMenu.hidden) return;
-    const isInside =
-      photoMenu.contains(event.target) ||
-      (avatarTrigger && avatarTrigger.contains(event.target));
-    if (!isInside) {
-      photoMenu.hidden = true;
-    }
-  });
-})();
-
-
-  /* ---- Ajustes: audio / ruido / cerrar sesión / categorías ---- */
-
-  const audioFromSettings = document.querySelector(
-    "[data-open-audio-from-settings]"
-  );
-  if (audioFromSettings) {
-    audioFromSettings.addEventListener("click", () => {
-      // Lo tratamos como parte del módulo de ruido
-      showView("view-audio-test", "noise");
-    });
-  }
-
-  const noiseSettingsBtn = document.querySelector("[data-open-noise-settings]");
-  if (noiseSettingsBtn) {
-    noiseSettingsBtn.addEventListener("click", () => {
-      showView("view-settings-noise", "profile");
-    });
-  }
-
-  const categoriesBtn = document.querySelector("[data-open-categories]");
-  if (categoriesBtn) {
-    categoriesBtn.addEventListener("click", () => {
-      showView("view-settings-categories", "profile");
-    });
-  }
-
-  const logoutBtn = document.querySelector("[data-logout]");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      const ok = window.confirm(
-        "¿Estás seguro de que quieres Cerrar Sesión?"
-      );
-      if (ok) {
-        // Aquí conectas con tu flujo real de cierre de sesión
-        window.location.href = "login.html";
+      saveProfileToStorage();
+      if (profileSaveMessage) {
+        profileSaveMessage.classList.remove("hidden");
+        setTimeout(() => {
+          profileSaveMessage.classList.add("hidden");
+        }, 2000);
       }
     });
   }
 
-  /* ---- Toggle visual (on/off) ---- */
-
-  document.querySelectorAll(".toggle").forEach((toggle) => {
-    toggle.addEventListener("click", () => {
-      toggle.classList.toggle("toggle--on");
-      const pressed = toggle.classList.contains("toggle--on");
-      toggle.setAttribute("aria-pressed", pressed ? "true" : "false");
+  if (togglePasswordButton && profilePasswordInput) {
+    togglePasswordButton.addEventListener("click", () => {
+      const isPassword = profilePasswordInput.type === "password";
+      profilePasswordInput.type = isPassword ? "text" : "password";
     });
-  });
+  }
+
+  function openPhotoMenu() {
+    if (photoMenuOverlay) {
+      photoMenuOverlay.classList.remove("hidden");
+    }
+  }
+
+  function closePhotoMenu() {
+    if (photoMenuOverlay) {
+      photoMenuOverlay.classList.add("hidden");
+    }
+  }
+
+  if (profilePhotoContainer) {
+    profilePhotoContainer.addEventListener("click", openPhotoMenu);
+    profilePhotoContainer.addEventListener("keypress", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        openPhotoMenu();
+      }
+    });
+  }
+
+  if (editPhotoButton) {
+    editPhotoButton.addEventListener("click", openPhotoMenu);
+  }
+
+  if (btnClosePhotoMenu) {
+    btnClosePhotoMenu.addEventListener("click", closePhotoMenu);
+  }
+
+  function handlePhotoFileInput(input) {
+    const file = input.files && input.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (profilePhoto) {
+        profilePhoto.src = reader.result;
+        profilePhoto.dataset.photoData = reader.result;
+        profilePhoto.style.display = "block";
+      }
+      saveProfileToStorage();
+      closePhotoMenu();
+      input.value = "";
+    };
+    reader.readAsDataURL(file);
+  }
+
+  if (btnUpdatePhoto && uploadPhotoInput) {
+    btnUpdatePhoto.addEventListener("click", () => {
+      uploadPhotoInput.click();
+    });
+
+    uploadPhotoInput.addEventListener("change", () => {
+      handlePhotoFileInput(uploadPhotoInput);
+    });
+  }
+
+  if (btnTakePhoto && capturePhotoInput) {
+    btnTakePhoto.addEventListener("click", () => {
+      capturePhotoInput.click();
+    });
+
+    capturePhotoInput.addEventListener("change", () => {
+      handlePhotoFileInput(capturePhotoInput);
+    });
+  }
+
+  if (btnDeletePhoto && profilePhoto) {
+    btnDeletePhoto.addEventListener("click", () => {
+      profilePhoto.src = "assets/images/profile-default.png";
+      profilePhoto.dataset.photoData = "";
+      saveProfileToStorage();
+      closePhotoMenu();
+    });
+  }
+
+  // LANGUAGE SIMULATION ------------------------------------------------------
+
+  const languageSelect = document.getElementById("languageSelect");
+  const translations = {
+    es: {
+      settingsTitle: "Ajustes",
+      settingsAudio: "Audio",
+      settingsLanguage: "Idioma",
+      settingsNoise: "Ruido",
+      settingsLogout: "Cerrar sesión",
+      navHome: "Inicio",
+      navMap: "Mapa",
+      navCreate: "Crear Reporte",
+      navNoise: "Medición de ruido",
+      navProfile: "Perfil",
+      homeTitle: "Reportes de la comunidad",
+      mapTitle: "Mapa de ruido de Lima",
+      createTitle: "Reportar medición de ruido",
+    },
+    en: {
+      settingsTitle: "Settings",
+      settingsAudio: "Audio",
+      settingsLanguage: "Language",
+      settingsNoise: "Noise",
+      settingsLogout: "Log Out",
+      navHome: "Home",
+      navMap: "Map",
+      navCreate: "Create report",
+      navNoise: "Noise measure",
+      navProfile: "Profile",
+      homeTitle: "Community reports",
+      mapTitle: "Lima noise map",
+      createTitle: "Report noise measurement",
+    },
+  };
+
+  function applyLanguage(lang) {
+    const t = translations[lang] || translations.es;
+
+    const get = (selector) => document.querySelector(selector);
+
+    const settingsTitle = document.querySelector(
+      '[data-i18n-key="settingsTitle"]'
+    );
+    const settingsAudio = document.querySelector(
+      '[data-i18n-key="settingsAudio"]'
+    );
+    const settingsLanguage = document.querySelector(
+      '[data-i18n-key="settingsLanguage"]'
+    );
+    const settingsNoise = document.querySelector(
+      '[data-i18n-key="settingsNoise"]'
+    );
+    const settingsLogout = document.querySelector(
+      '[data-i18n-key="settingsLogout"]'
+    );
+    const homeTitle = document.querySelector('[data-i18n-key="homeTitle"]');
+    const mapTitle = document.querySelector('[data-i18n-key="mapTitle"]');
+    const createTitle = document.querySelector('[data-i18n-key="createTitle"]');
+
+    if (settingsTitle) settingsTitle.textContent = t.settingsTitle;
+    if (settingsAudio) settingsAudio.textContent = t.settingsAudio;
+    if (settingsLanguage) settingsLanguage.textContent = t.settingsLanguage;
+    if (settingsNoise) settingsNoise.textContent = t.settingsNoise;
+    if (settingsLogout) settingsLogout.textContent = t.settingsLogout;
+    if (homeTitle) homeTitle.textContent = t.homeTitle;
+    if (mapTitle) mapTitle.textContent = t.mapTitle;
+    if (createTitle) createTitle.textContent = t.createTitle;
+
+    // nav labels
+    const navHome = document.querySelector('[data-nav="home"] .nav-label');
+    const navMap = document.querySelector('[data-nav="map"] .nav-label');
+    const navCreate = document.querySelector('[data-nav="create"] .nav-label');
+    const navNoise = document.querySelector('[data-nav="noise"] .nav-label');
+    const navProfile = document.querySelector(
+      '[data-nav="profile"] .nav-label'
+    );
+
+    if (navHome) navHome.textContent = t.navHome;
+    if (navMap) navMap.textContent = t.navMap;
+    if (navCreate) navCreate.textContent = t.navCreate;
+    if (navNoise) navNoise.textContent = t.navNoise;
+    if (navProfile) navProfile.textContent = t.navProfile;
+
+    document.documentElement.lang = lang;
+    localStorage.setItem("ecoPulseLanguage", lang);
+  }
+
+  if (languageSelect) {
+    languageSelect.addEventListener("change", () => {
+      applyLanguage(languageSelect.value);
+    });
+
+    const storedLang = localStorage.getItem("ecoPulseLanguage") || "es";
+    languageSelect.value = storedLang;
+    applyLanguage(storedLang);
+  }
 });
