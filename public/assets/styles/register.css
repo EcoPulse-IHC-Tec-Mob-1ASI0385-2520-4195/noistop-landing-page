@@ -8,7 +8,7 @@ body {
   height: 100vh;
 }
 
-.login-container {
+.register-container {
   display: flex;
   background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -45,51 +45,39 @@ body {
   color: #333;
 }
 
-/* Espaciado uniforme entre todos los elementos del formulario */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
 label {
+  display: block;
+  margin-top: 15px;
   font-weight: bold;
 }
 
 input {
   width: 100%;
   padding: 10px;
+  margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.recover-link {
-  font-size: 0.9em;
-  color: #2e7d32;
-  text-decoration: none;
-}
-
-/* Estilo compartido para ambos botones */
-.login-btn,
 .register-btn {
+  margin-top: 50px;
   width: 100%;
   padding: 12px;
   border: none;
   border-radius: 4px;
   font-weight: bold;
   cursor: pointer;
-  text-align: center;
-  display: inline-block;
-  text-decoration: none;
-}
-
-/* Estilo individual para cada botón */
-.login-btn {
   background-color: #2e7d32;
   color: white;
 }
 
-.register-btn {
-  background-color: #a5d6a7;
+.login-link {
+  margin-top: 15px;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.login-link a {
   color: #2e7d32;
+  text-decoration: none;
 }
