@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eco Pulse - Recuperar Contraseña</title>
+  <link rel="stylesheet" href="public/assets/styles/recover.css" />
+</head>
+<body>
+  <div class="recover-container">
+    <div class="logo-section">
+      <a href="index.html">
+        <img src="public/assets/images/logo-ecopulse.png" alt="Eco Pulse Logo" class="logo" />
+      </a>
+      <h1>Eco Pulse</h1>
+    </div>
+    <div class="form-section">
+      <h2>Recuperar Contraseña</h2>
+      <form id="recoverForm">
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" required />
+
+        <label for="newPassword">Nueva contraseña</label>
+        <input type="password" id="newPassword" required />
+
+        <label for="confirmPassword">Confirmar nueva contraseña</label>
+        <input type="password" id="confirmPassword" required />
+
+        <button type="submit" class="recover-btn">Actualizar contraseña</button>
+        <p class="login-link">
+          ¿Ya recuerdas tu contraseña? <a href="login.html">Inicia sesión aquí</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('recoverForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const newPassword = document.getElementById('newPassword').value.trim();
+      const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+      if (!email || !newPassword || !confirmPassword) {
+        alert("Por favor, completa todos los campos.");
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        alert("Las contraseñas no coinciden.");
+        return;
+      }
+
+      alert("Contraseña actualizada exitosamente");
+       window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>
